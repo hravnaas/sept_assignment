@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^useradmin/', include('apps.login_reg.urls', namespace='useradmin')),
+    #url(r'^useradmin/', include('apps.login_reg.urls', namespace='useradmin')),
+    url(r'^', include('apps.login_reg.urls', namespace='useradmin')),
     url(r'^poke/', include('apps.sept_assignment.urls', namespace='poke'))
 ]

@@ -4,7 +4,7 @@ from django.db.models import Sum, Count, Avg
 from ..login_reg.models import User
 
 
-############### Author ###############
+############### Poke ###############
 
 class PokeMgr(models.Manager):
     def poke(self, target_id, userID):
@@ -25,11 +25,12 @@ class PokeMgr(models.Manager):
             )
         return
 
-    # Returns all pokes that were targeted toward logged in user.
+    # Returns all pokes that were targeted towards logged in user.
     def getAllMyPokes(self, userID):
         return Poke.objects.filter(poke_target_id = userID).exclude(poke_source_id = userID)
 
     # Return all pokes targeted towards other people (not logged in user).
+    # Results are grouped by the user ID and the num_pokes summed up.
     def getPokeHistory(self, userID):
         return User.objects.exclude(id = userID).annotate(tot_pokes=Sum('poke_targets__num_pokes'))
 

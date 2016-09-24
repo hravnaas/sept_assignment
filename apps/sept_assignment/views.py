@@ -9,6 +9,11 @@ def poke(request, poke_target_id):
     return redirect(reverse('poke:index'))
 
 def index(request):
+    if "userID" not in request.session:
+        # Prevent user from going to the success page if not logged in.
+        return redirect(reverse('useradmin:index'))
+
+    # User is logged in. Get the current status of pokes.
     context = {
         "alias" : User.objects.get(id = request.session['userID']).alias,
         "userPokes" : Poke.objects.getAllMyPokes(request.session['userID']),
